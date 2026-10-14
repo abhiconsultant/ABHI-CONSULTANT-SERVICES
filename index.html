@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ABHI CONSULTANT / MULTISERVICES</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f5f9;
+    color: #222;
+}
+
+header {
+    background: #123d70;
+    color: white;
+    text-align: center;
+    padding: 25px 12px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 27px;
+}
+
+header p {
+    margin-bottom: 0;
+}
+
+.container {
+    max-width: 750px;
+    margin: 20px auto;
+    padding: 22px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px #00000015;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+input[type="text"],
+input[type="tel"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 7px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+h2 {
+    color: #123d70;
+    font-size: 20px;
+    margin-top: 25px;
+}
+
+.service {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px;
+    border-bottom: 1px solid #eee;
+    font-weight: normal;
+    margin: 0;
+}
+
+.service input {
+    width: 18px;
+    height: 18px;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 22px;
+    background: #168747;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #106c37;
+}
+
+.note {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+    margin-top: 18px;
+}
+
+footer {
+    text-align: center;
+    padding: 18px;
+    background: #123d70;
+    color: white;
+    font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>ABHI CONSULTANT</h1>
+    <h2 style="color:white; margin:5px;">MULTISERVICES</h2>
+    <p id="subtitle">शासकीय सेवा | रिअल इस्टेट | कर्ज मार्गदर्शन</p>
+</header>
+
+<div class="container">
+
+    <label id="languageLabel" for="language">भाषा निवडा / Select Language</label>
+
+    <select id="language" onchange="changeLanguage()">
+        <option value="mr">मराठी</option>
+        <option value="hi">हिंदी</option>
+        <option value="en">English</option>
+    </select>
+
+    <h2 id="formTitle">ग्राहक माहिती</h2>
+
+    <label id="nameLabel" for="customerName">तुमचे पूर्ण नाव *</label>
+    <input type="text" id="customerName" placeholder="पूर्ण नाव">
+
+    <label id="mobileLabel" for="mobile">मोबाइल नंबर *</label>
+    <input type="tel" id="mobile" inputmode="numeric"
+           maxlength="10" placeholder="10 अंकी मोबाइल नंबर">
+
+    <label id="areaLabel" for="area">एरिया / शहर *</label>
+    <input type="text" id="area" placeholder="उदा. ठाणे, मुलुंड">
+
+    <h2 id="governmentTitle">शासकीय सेवा व डॉक्युमेंटेशन</h2>
+    <div id="governmentServices"></div>
+
+    <h2 id="realEstateTitle">रिअल इस्टेट सेवा</h2>
+    <div id="realEstateServices"></div>
+
+    <h2 id="loanTitle">लोन / कर्ज सेवा</h2>
+    <div id="loanServices"></div>
+
+    <label id="detailsLabel" for="details">अधिक माहिती (ऐच्छिक)</label>
+    <textarea id="details" rows="4"
+              placeholder="तुमच्या कामाबद्दल थोडक्यात लिहा"></textarea>
+
+    <button type="button" id="sendButton" onclick="sendWhatsApp()">
+        SEND REQUEST ON WHATSAPP
+    </button>
+
+    <p class="note" id="privacyNote">
+        गोपनीयतेची सूचना: येथे आधार/PAN क्रमांक, OTP, ATM PIN,
+        बँक पासवर्ड किंवा इतर गोपनीय माहिती लिहू नका.
+        ही विनंती WhatsApp वर पाठवण्यापूर्वी तुम्हाला मेसेज तपासता येईल.
+    </p>
+
+</div>
+
+<footer>
+    ABHI CONSULTANT / MULTISERVICES
+    <br>
+    Thane | Mulund | Navi Mumbai
+</footer>
+
+<script>
+const translations = {
+    mr: {
+        subtitle: "शासकीय सेवा | रिअल इस्टेट | कर्ज मार्गदर्शन",
+        languageLabel: "भाषा निवडा",
+        formTitle: "ग्राहक माहिती",
+        nameLabel: "तुमचे पूर्ण नाव *",
+        namePlaceholder: "पूर्ण नाव",
+        mobileLabel: "मोबाइल नंबर *",
+        mobilePlaceholder: "10 अंकी मोबाइल नंबर",
+        areaLabel: "एरिया / शहर *",
+        areaPlaceholder: "उदा. ठाणे, मुलुंड",
+        governmentTitle: "शासकीय सेवा व डॉक्युमेंटेशन",
+        realEstateTitle: "रिअल इस्टेट सेवा",
+        loanTitle: "लोन / कर्ज सेवा",
+        detailsLabel: "अधिक माहिती (ऐच्छिक)",
+        detailsPlaceholder: "तुमच्या कामाबद्दल थोडक्यात लिहा",
+        sendButton: "WHATSAPP वर विनंती पाठवा",
+        privacyNote: "गोपनीयतेची सूचना: येथे आधार/PAN क्रमांक, OTP, ATM PIN, बँक पासवर्ड किंवा इतर गोपनीय माहिती लिहू नका. WhatsApp वर पाठवण्यापूर्वी मेसेज तपासा.",
+        error: "कृपया तुमचे नाव, योग्य 10 अंकी मोबाइल नंबर आणि एरिया भरा.",
+        chooseService: "कृपया किमान एक सेवा निवडा.",
+        messageTitle: "नवीन ग्राहक विनंती",
+        name: "नाव",
+        mobile: "मोबाइल",
+        area: "एरिया",
+        services: "निवडलेल्या सेवा",
+        details: "अधिक माहिती"
+    },
+
+    hi: {
+        subtitle: "सरकारी सेवाएँ | रियल एस्टेट | लोन सहायता",
+        languageLabel: "भाषा चुनें",
+        formTitle: "ग्राहक की जानकारी",
+        nameLabel: "आपका पूरा नाम *",
+        namePlaceholder: "पूरा नाम",
+        mobileLabel: "मोबाइल नंबर *",
+        mobilePlaceholder: "10 अंकों का मोबाइल नंबर",
+        areaLabel: "इलाका / शहर *",
+        areaPlaceholder: "जैसे ठाणे, मुलुंड",
+        governmentTitle: "सरकारी सेवाएँ और डॉक्यूमेंटेशन",
+        realEstateTitle: "रियल एस्टेट सेवाएँ",
+        loanTitle: "लोन सेवाएँ",
+        detailsLabel: "अधिक जानकारी (वैकल्पिक)",
+        detailsPlaceholder: "अपने काम के बारे में संक्षेप में लिखें",
+        sendButton: "WHATSAPP पर अनुरोध भेजें",
+        privacyNote: "गोपनीयता सूचना: यहाँ आधार/PAN नंबर, OTP, ATM PIN, बैंक पासवर्ड या अन्य गोपनीय जानकारी न लिखें। WhatsApp पर भेजने से पहले संदेश जाँच लें।",
+        error: "कृपया अपना नाम, सही 10 अंकों का मोबाइल नंबर और इलाका भरें।",
+        chooseService: "कृपया कम से कम एक सेवा चुनें।",
+        messageTitle: "नया ग्राहक अनुरोध",
+        name: "नाम",
+        mobile: "मोबाइल",
+        area: "इलाका",
+        services: "चुनी गई सेवाएँ",
+        details: "अधिक जानकारी"
+    },
+
+    en: {
+        subtitle: "Government Services | Real Estate | Loan Assistance",
+        languageLabel: "Select Language",
+        formTitle: "Customer Information",
+        nameLabel: "Full Name *",
+        namePlaceholder: "Enter full name",
+        mobileLabel: "Mobile Number *",
+        mobilePlaceholder: "10-digit mobile number",
+        areaLabel: "Area / City *",
+        areaPlaceholder: "e.g. Thane, Mulund",
+        governmentTitle: "Government Services & Documentation",
+        realEstateTitle: "Real Estate Services",
+        loanTitle: "Loan Assistance Services",
+        detailsLabel: "Additional Details (Optional)",
+        detailsPlaceholder: "Briefly describe the work you need",
+        sendButton: "SEND REQUEST ON WHATSAPP",
+        privacyNote: "Privacy notice: Do not enter Aadhaar/PAN numbers, OTPs, ATM PINs, bank passwords, or other confidential information here. Review the message before sending it on WhatsApp.",
+        error: "Please enter your name, a valid 10-digit mobile number, and your area.",
+        chooseService: "Please select at least one service.",
+        messageTitle: "New Customer Request",
+        name: "Name",
+        mobile: "Mobile",
+        area: "Area",
+        services: "Selected Services",
+        details: "Additional Details"
+    }
+};
+
+const serviceData = {
+    government: [
+        ["aadhaar", "आधार कार्डसाठी मदत", "आधार कार्ड सहायता", "Aadhaar Card Assistance"],
+        ["pan", "PAN कार्ड", "PAN कार्ड", "PAN Card"],
+        ["voter", "मतदार ओळखपत्र", "वोटर ID", "Voter ID"],
+        ["caste", "जात प्रमाणपत्र", "जाति प्रमाणपत्र", "Caste Certificate"],
+        ["income", "उत्पन्न प्रमाणपत्र", "आय प्रमाणपत्र", "Income Certificate"],
+        ["residence", "रहिवासी प्रमाणपत्र", "निवास प्रमाणपत्र", "Residence Certificate"],
+        ["govforms", "सरकारी ऑनलाइन फॉर्म", "सरकारी ऑनलाइन फॉर्म", "Government Online Forms"],
+        ["agreement", "करारपत्र व डॉक्युमेंटेशन", "एग्रीमेंट और डॉक्यूमेंटेशन", "Agreement & Documentation"],
+        ["bank", "बँकेसंबंधित काम", "बैंक संबंधित कार्य", "Bank Related Work"],
+        ["insurance", "इन्शुरन्स फॉर्म", "बीमा फॉर्म", "Insurance Forms"],
+        ["excel", "Excel व डेटा एन्ट्री", "Excel और डेटा एंट्री", "Excel & Data Entry"],
+        ["society", "सोसायटी ऑफिस काम", "सोसायटी ऑफिस कार्य", "Society Office Work"]
+    ],
+
+    realEstate: [
+        ["buy", "रूम / फ्लॅट खरेदी", "रूम / फ्लैट खरीदना", "Room / Flat Buy"],
+        ["sell", "रूम / फ्लॅट विक्री", "रूम / फ्लैट बेचना", "Room / Flat Sell"],
+        ["rent", "रूम / फ्लॅट भाड्याने", "रूम / फ्लैट किराए पर", "Room / Flat Rent"],
+        ["propertydoc", "प्रॉपर्टी डॉक्युमेंटेशन", "प्रॉपर्टी डॉक्यूमेंटेशन", "Property Documentation"],
+        ["rentagreement", "भाडेकरार", "रेंट एग्रीमेंट", "Rent Agreement"]
+    ],
+
+    loan: [
+        ["personal", "पर्सनल लोन", "पर्सनल लोन", "Personal Loan"],
+        ["home", "होम लोन", "होम लोन", "Home Loan"],
+        ["business", "बिझनेस लोन", "बिजनेस लोन", "Business Loan"],
+        ["emi", "EMI कॅल्क्युलेशन", "EMI कैलकुलेशन", "EMI Calculation"],
+        ["loandoc", "लोन डॉक्युमेंटेशन", "लोन डॉक्यूमेंटेशन", "Loan Documentation"],
+        ["other", "इतर काम", "अन्य कार्य", "Other Work"]
+    ]
+};
+
+function renderServices() {
+    const lang = document.getElementById("language").value;
+
+    for (const group of Object.keys(serviceData)) {
+        const target = document.getElementById(group + "Services");
+        target.innerHTML = "";
+
+        serviceData[group].forEach(item => {
+            const label = document.createElement("label");
+            label.className = "service";
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.name = "service";
+            checkbox.value = item[0];
+            checkbox.dataset.mr = item[1];
+            checkbox.dataset.hi = item[2];
+            checkbox.dataset.en = item[3];
+
+            const span = document.createElement("span");
+            span.textContent = item[lang === "mr" ? 1 : lang === "hi" ? 2 : 3];
+
+            label.appendChild(checkbox);
+            label.appendChild(span);
+            target.appendChild(label);
+        });
+    }
+}
+
+function changeLanguage() {
+    const lang = document.getElementById("language").value;
+    const t = translations[lang];
+
+    document.documentElement.lang = lang;
+    document.getElementById("subtitle").textContent = t.subtitle;
+    document.getElementById("languageLabel").textContent = t.languageLabel;
+    document.getElementById("formTitle").textContent = t.formTitle;
+    document.getElementById("nameLabel").textContent = t.nameLabel;
+    document.getElementById("customerName").placeholder = t.namePlaceholder;
+    document.getElementById("mobileLabel").textContent = t.mobileLabel;
+    document.getElementById("mobile").placeholder = t.mobilePlaceholder;
+    document.getElementById("areaLabel").textContent = t.areaLabel;
+    document.getElementById("area").placeholder = t.areaPlaceholder;
+    document.getElementById("governmentTitle").textContent = t.governmentTitle;
+    document.getElementById("realEstateTitle").textContent = t.realEstateTitle;
+    document.getElementById("loanTitle").textContent = t.loanTitle;
+    document.getElementById("detailsLabel").textContent = t.detailsLabel;
+    document.getElementById("details").placeholder = t.detailsPlaceholder;
+    document.getElementById("sendButton").textContent = t.sendButton;
+    document.getElementById("privacyNote").textContent = t.privacyNote;
+
+    renderServices();
+}
+
+function sendWhatsApp() {
+    const lang = document.getElementById("language").value;
+    const t = translations[lang];
+
+    const name = document.getElementById("customerName").value.trim();
+    const mobile = document.getElementById("mobile").value.trim();
+    const area = document.getElementById("area").value.trim();
+    const details = document.getElementById("details").value.trim();
+
+    if (!name || !/^[0-9]{10}$/.test(mobile) || !area) {
+        alert(t.error);
+        return;
+    }
+
+    const selected = Array.from(
+        document.querySelectorAll('input[name="service"]:checked')
+    );
+
+    if (selected.length === 0) {
+        alert(t.chooseService);
+        return;
+    }
+
+    const serviceNames = selected.map(cb => {
+        return cb.dataset[lang];
+    });
+
+    let message =
+        t.messageTitle + "\n\n" +
+        t.name + ": " + name + "\n" +
+        t.mobile + ": " + mobile + "\n" +
+        t.area + ": " + area + "\n\n" +
+        t.services + ":\n- " + serviceNames.join("\n- ");
+
+    if (details) {
+        message += "\n\n" + t.details + ": " + details;
+    }
+
+    const whatsappURL =
+        "https://wa.me/917021306134?text=" +
+        encodeURIComponent(message);
+
+    window.open(whatsappURL, "_blank");
+}
+
+renderServices();
+changeLanguage();
+</script>
+
+</body>
+</html>
